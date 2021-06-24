@@ -5,7 +5,7 @@ body {
   display: flex;
   flex-direction: column;
   background-image: url("background.png");
-  font-family: var(--font-default);
+  font-family: $font-default;
   font-size: 18px;
   max-width: 1300px;
   margin: 0 auto;
@@ -18,4 +18,16 @@ p {
 
 img {
   padding-right: 1rem;
+}
+
+main {
+  font-size: 130%;
+  font-weight: bolder;
+  color: black;
+  padding-top: 0.5vw;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  margin: 1px 20px 15px;
+  border-radius: 2rem;
+  text-align: justify;
 }

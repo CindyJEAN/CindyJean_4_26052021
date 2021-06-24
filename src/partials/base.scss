@@ -1,8 +1,12 @@
-:root {
-    --font-default: "DM Sans", Arial, Helvetica, sans-serif;
-    --font-slab: var(--font-default);
-    --modal-duration: 0.8s;
-  }
+// :root {
+//     --font-default: "DM Sans", Arial, Helvetica, sans-serif;
+//     --font-slab: $font-default;
+//     --modal-duration: 0.8s;
+//   }
+
+$font-default: "DM Sans", Arial, Helvetica, sans-serif;
+$font-slab: $font-default;
+$modal-duration: 0.8s;
 
 $breakpoints: (
   bp800: 800px,
@@ -10,16 +14,16 @@ $breakpoints: (
   bp540: 540px,
 );
 
-@mixin bp800 {
-    @media screen and (min-width: map-get($breakpoints, bp800)) {@content}
+@mixin maxWidth800 {
+    @media screen and (max-width: map-get($breakpoints, bp800)) {@content}
 };
 
-@mixin bp768 {
-    @media screen and (min-width: map-get($breakpoints, bp768)) {@content}
+@mixin maxWidth768 {
+    @media screen and (max-width: map-get($breakpoints, bp768)) {@content}
 };
 
-@mixin bp540 {
-    @media screen and (min-width: map-get($breakpoints, bp540)) {@content}
+@mixin maxWidth540 {
+    @media screen and (max-width: map-get($breakpoints, bp540)) {@content}
 };
 
 * {
@@ -27,5 +31,6 @@ $breakpoints: (
   margin: 0;
   padding: 0;
 }
+
 
 
