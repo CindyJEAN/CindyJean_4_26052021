@@ -1,12 +1,12 @@
 "use strict";
  
-var gulp = require("gulp");
-var sass = require("gulp-sass");
-var browserSync = require("browser-sync").create();
+const gulp = require("gulp");
+const sass = require("gulp-sass");
+const browserSync = require("browser-sync").create();
  
-var ejs = require("gulp-ejs");
+const ejs = require("gulp-ejs");
 sass.compiler = require("node-sass");
-var concat = require("gulp-concat");
+const concat = require("gulp-concat");
 const cleanCSS = require("gulp-clean-css");
 const autoprefixer = require("gulp-autoprefixer");
 

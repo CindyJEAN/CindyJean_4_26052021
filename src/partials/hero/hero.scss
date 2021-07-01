@@ -1,55 +1,53 @@
 .hero-section {
-	min-height: 93vh;
+	// min-height: 93vh;
 	border-radius: 10px;
-	display: grid;
-	grid-template-columns: repeat(12, 1fr);
-	overflow: hidden;
-	box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.2);
+	display: block;
+	width: 100%;
 	margin-bottom: 10px;
 
-  @include maxWidth800 {
-		display: block;
-		box-shadow: unset;
+	@include tablet {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.2);
+		margin: 2rem 0;
 	}
 
 	> .btn-signup {
-		display: none;
+		display: block;
+		margin: 40px auto 0;
+		padding: 12px 35px;
 
-		@include maxWidth800 {
-			display: block;
-			margin: 32px auto 10px;
-			padding: 12px 35px;
+		@include tablet {
+			display: none;
 		}
 	}
-
 }
 
 .hero-content {
-	padding: 51px 67px;
-	grid-column: span 4;
-	background: #232323;
-	color: #fff;
-	position: relative;
-	text-align: left;
-	min-width: 424px;
+	// min-width: 424px;
+	background: #fff;
+	color: #000;
+	// padding: 20px;
 
-	@include maxWidth800 {
-		background: #fff;
-		color: #000;
-		padding: 20px;
+	@include tablet {
+		padding: 3rem 0 0 3rem;
+		grid-column: span 4;
+		background: #232323;
+		color: #fff;
+		position: relative;
+		text-align: left;
+		border-radius: 10px 0 0 10px;
 	}
 
 	&::after {
-		content: "";
-		width: 100%;
-		height: 100%;
-		background: #232323;
-		position: absolute;
-		right: -80px;
-		top: 0;
-
-		@include maxWidth800 {
-			content: unset;
+		@include tablet {
+			content: "";
+			width: 100%;
+			height: 100%;
+			background: #232323;
+			position: absolute;
+			right: -80px;
+			top: 0;
 		}
 	}
 
@@ -59,32 +57,36 @@
 	}
 
 	.btn-signup {
-		@include maxWidth800 {
-			display: none;
+		display: none;
+
+		@include tablet {
+			display: block;
 		}
 	}
 }
 
 .hero-headline {
-	font-size: 6rem;
+	font-size: 4.5rem;
 	font-weight: normal;
-	white-space: nowrap;
 
-  @include maxWidth800 {
-		font-size: 4.5rem;
-		white-space: normal;
+	@include tablet {
+		white-space: nowrap;
+	}
+
+	@include desktop {
+		font-size: 6rem;
 	}
 }
 
 .hero-text {
-	width: 146%;
+	font-size: 1.5rem;
 	font-weight: normal;
-	margin-top: 57px;
-	padding: 0;
+	margin-top: 40px;
+	margin-bottom: 40px;
 
-  @include maxWidth800 {
-		width: unset;
-		font-size: 1.5rem;
+	@include tablet {
+		width: 120%;
+		// width: 146%;
 	}
 }
 
@@ -96,11 +98,11 @@
 		height: 100%;
 		display: block;
 		padding: 0;
+		border-radius: 10px;
 
-    @include maxWidth800 {
-      border-radius: 10px;
-      margin-top: 40px;
-    }
+		@include tablet {
+			margin-top: 0;
+		}
 	}
 }
 
@@ -109,16 +111,16 @@
 	text-transform: capitalize;
 	font-size: 1.3rem;
 	padding: 15px 23px;
-	margin: 0;
-	margin-top: 59px;
+	// margin: 0;
+	// margin-top: 59px;
 }
 
 .modal-btn {
 	font-size: 145%;
 	background: #fe142f;
 	display: flex;
-	margin: auto;
-	padding: 2em;
+	// margin: auto;
+	// padding: 2em;
 	color: #fff;
 	padding: 0.75rem 2.5rem;
 	border-radius: 1rem;

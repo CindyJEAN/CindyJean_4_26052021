@@ -9,22 +9,36 @@ $font-slab: $font-default;
 $modal-duration: 0.8s;
 
 $breakpoints: (
-  bp800: 800px,
-  bp768: 768px,
-  bp540: 540px,
+  tablet: 768px,
+  desktop: 992px,
 );
 
-@mixin maxWidth800 {
-    @media screen and (max-width: map-get($breakpoints, bp800)) {@content}
+@mixin tablet {
+  @media screen and (min-width: map-get($breakpoints, tablet)) {@content}
 };
 
-@mixin maxWidth768 {
-    @media screen and (max-width: map-get($breakpoints, bp768)) {@content}
+@mixin desktop {
+    @media screen and (min-width: map-get($breakpoints, desktop)) {@content}
 };
 
-@mixin maxWidth540 {
-    @media screen and (max-width: map-get($breakpoints, bp540)) {@content}
-};
+
+// $breakpoints: (
+//   bp800: 800px,
+//   bp768: 768px,
+//   bp540: 540px,
+// );
+
+// @mixin maxWidth800 {
+//     @media screen and (max-width: map-get($breakpoints, bp800)) {@content}
+// };
+
+// @mixin maxWidth768 {
+//     @media screen and (max-width: map-get($breakpoints, bp768)) {@content}
+// };
+
+// @mixin maxWidth540 {
+//     @media screen and (max-width: map-get($breakpoints, bp540)) {@content}
+// };
 
 * {
   box-sizing: border-box;

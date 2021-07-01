@@ -1,3 +1,8 @@
+/**
+ * [editNav description]
+ *
+ * @return  {[type]}  [return description]
+ */
 function editNav() {
 	var x = document.getElementById("myTopnav");
 	if (x.className === "topnav") {
@@ -21,6 +26,11 @@ const formData = document.querySelectorAll(".formData");
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // launch modal form
+/**
+ * [launchModal description]
+ *
+ * @return  {[type]}  [return description]
+ */
 function launchModal() {
 	modalbg.style.display = "block";
 }
