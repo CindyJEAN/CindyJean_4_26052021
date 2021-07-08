@@ -13,13 +13,18 @@
 .topnav {
 	margin: 1.5rem;
 	max-width: 1300px;
+	height: 70px;
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	// align-items: center;
 	align-content: center;
 
 	@include tablet {
 		row-gap: 15px;
+		align-items: center;
+	}
+
+	@include desktop {	
 		margin: 3rem;
 	}
 
@@ -38,17 +43,14 @@
 			display: block;
 		}
 
-		// @include desktop {
-		// 	font-size: 20px;
-		// }
-
-		&.active, &:hover {
-			background-color: #ff0000;
+		&.active,
+		&:hover {
+			background-color: $color-primary;
 			color: #ffffff;
 		}
 
 		&:hover {
-			background-color: #ff0000;
+			background-color: $color-primary;
 			color: #ffffff;
 			text-decoration: underline;
 			text-underline-offset: 3px;
@@ -63,33 +65,47 @@
 			}
 
 			i {
-				color: red;
+				color: $color-primary;
 				font-size: 1.5rem;
+			}
+
+			&:hover {
+				background: none;
+				color: $color-primary;
 			}
 		}
 	}
 
-	// @include maxWidth768 {
-	//   &.responsive {
-	//     position: relative;
+	&.responsive {
+		position: relative;
+		display: inline-block;
 
-	//     .icon {
-	//       position: absolute;
-	//       right: 0;
-	//       top: 0;
-	//     }
+		.main-navbar {
+			display: block;
+			float: right;
+			margin-top: 1rem;
+		}
 
-	//     a {
-	//       float: none;
-	//       display: block;
-	//       text-align: left;
-	//     }
-	//   }
-	// }
+		.icon {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		a {
+			float: none;
+			display: block;
+			text-align: left;
+		}
+	}
 }
 
 .main-navbar {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
+	// align-items: center;
+
+	@include tablet {
+		align-items: center;
+	}
 }

@@ -1,5 +1,9 @@
 /* Landing Page */
 
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   display: flex;
@@ -34,7 +38,7 @@ main {
   // text-align: justify;
   max-width: 1300px;
 
-  @include tablet {
+  @include desktop {
     margin: 1rem 3rem;
   }
 }
