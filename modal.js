@@ -56,8 +56,8 @@ closeBtn.addEventListener("click", closeModal);
  */
 function launchModal() {
 	modalbg.style.display = "block";
-	heroSection.style.display = "none";
-	footer.style.display = "none";
+	// heroSection.style.display = "none";
+	// footer.style.display = "none";
 	scroll(0,0);
 	return true;
 }
@@ -71,8 +71,8 @@ function launchModal() {
  */
 function closeModal() {
 	modalbg.style.display = "none";
-	heroSection.style.display = "block";
-	footer.style.display = "flex";
+	// heroSection.style.display = "block";
+	// footer.style.display = "flex";
 	return true;
 }
 
