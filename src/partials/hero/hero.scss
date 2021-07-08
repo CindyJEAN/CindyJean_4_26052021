@@ -9,13 +9,13 @@
 		display: grid;
 		grid-template-columns: repeat(12, 1fr);
 		box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.2);
-		margin: 2rem 0;
+		// margin: 2rem 0;
+		margin: 0;
 	}
 
-	> .btn-signup {
+	> .modal-btn {
 		display: block;
-		margin: 40px auto 0;
-		padding: 12px 35px;
+		margin: 2rem auto 0;
 
 		@include tablet {
 			display: none;
@@ -27,6 +27,10 @@
 	// min-width: 424px;
 	background: #fff;
 	color: #000;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
 	// padding: 20px;
 
 	@include tablet {
@@ -56,11 +60,12 @@
 		z-index: 1;
 	}
 
-	.btn-signup {
+	.modal-btn {
 		display: none;
 
 		@include tablet {
 			display: block;
+			margin: 2rem 0 3rem;
 		}
 	}
 }
@@ -106,27 +111,9 @@
 	}
 }
 
-.btn-signup {
-	outline: none;
-	text-transform: capitalize;
-	font-size: 1.3rem;
-	padding: 15px 23px;
-	// margin: 0;
-	// margin-top: 59px;
-}
-
 .modal-btn {
+	text-transform: capitalize;
 	font-size: 145%;
-	background: #fe142f;
-	display: flex;
-	// margin: auto;
-	// padding: 2em;
-	color: #fff;
-	padding: 0.75rem 2.5rem;
-	border-radius: 1rem;
-	cursor: pointer;
-
-	&:hover {
-		background: #3876ac;
-	}
+	padding: 0.75rem 2rem;
+	margin: 2rem auto 0;
 }

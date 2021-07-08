@@ -20,6 +20,7 @@
 
 	@include tablet {
 		row-gap: 15px;
+		margin: 3rem;
 	}
 
 	a {
@@ -37,9 +38,9 @@
 			display: block;
 		}
 
-		@include desktop {
-			font-size: 20px;
-		}
+		// @include desktop {
+		// 	font-size: 20px;
+		// }
 
 		&.active, &:hover {
 			background-color: #ff0000;
@@ -55,6 +56,7 @@
 
 		&.icon {
 			display: block;
+			padding: 0 6px;
 
 			@include tablet {
 				display: none;
@@ -62,6 +64,7 @@
 
 			i {
 				color: red;
+				font-size: 1.5rem;
 			}
 		}
 	}
