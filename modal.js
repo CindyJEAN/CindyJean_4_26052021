@@ -1,8 +1,9 @@
 /**
- * [editNav description] ????
+ * [editNav description]
  *
- * @return  {[type]}  [return description]
+ * @return  {void}  [return description]
  */
+// eslint-disable-next-line no-unused-vars
 function editNav() {
 	var x = document.getElementById("myTopnav");
 	if (x.className === "topnav") {
@@ -57,10 +58,11 @@ function launchModal() {
 	modalbg.style.display = "block";
 	heroSection.style.display = "none";
 	footer.style.display = "none";
+	scroll(0,0);
 	return true;
 }
 
-// launch modal form
+// close modal form
 /**
  * A la fermeture de la modale, on fait disparaître la modale et apparaître la 
  * section hero et le footers
@@ -74,18 +76,3 @@ function closeModal() {
 	return true;
 }
 
-
-
-//Exemple de fonction avec arguments : a supprimer ensuite
-/**
- * permet de tester une valeur
- *
- * @param   {HTMLElement}  argument  un nom
- * @param	{Number}       bidule    un chiffre
- *
- * @return  {Boolean}           vrai ou faux
- */
-// function test(argument, bidule) {
-// 	console.log(argument);
-// 	return true;
-// }
