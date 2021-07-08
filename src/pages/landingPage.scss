@@ -33,12 +33,10 @@ main {
   // padding-left: 2vw;
   // padding-right: 2vw;
   // margin: 1px 20px 15px;
-  margin: 0 1.5rem;
   border-radius: 2rem;
   // text-align: justify;
-  max-width: 1300px;
 
-  @include desktop {
-    margin: 1rem 3rem;
-  }
+  // @include desktop {
+  //   margin: 1rem 3rem;
+  // }
 }
