@@ -13,7 +13,7 @@ function editNav() {
 	}
 }
 
-// DOM Elements
+//------ DOM Elements ------ //
 /**
  * le fond de la modale
  *
@@ -41,13 +41,13 @@ const footer = document.querySelector("footer");
  */
 const closeBtn = document.querySelector(".close");
 
-// launch modal event
+// ------ launch modal event ------ //
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-//close modal event
+// ------ close modal event ------ //
 closeBtn.addEventListener("click", closeModal);
 
-// launch modal form
+// ------ launch modal form function ------ //
 /**
  * Au lancement de la modale, on fait apparaître la modale et disparaître la 
  * section hero et le footer, pour ne pas que l'on voit le fond si on swipe vers le bas
@@ -59,10 +59,11 @@ function launchModal() {
 	// heroSection.style.display = "none";
 	// footer.style.display = "none";
 	scroll(0,0);
+	document.querySelector("form").focus();
 	return true;
 }
 
-// close modal form
+// ------ close modal form function ------ //
 /**
  * A la fermeture de la modale, on fait disparaître la modale et apparaître la 
  * section hero et le footers
@@ -76,3 +77,22 @@ function closeModal() {
 	return true;
 }
 
+
+// ------ Input validation ------ //
+
+
+// ------ Sending form ------ //
+
+/**
+ * Function to send form data
+ *
+ * @param   {[type]}    ??
+ *
+ * @return  {void}     [return description]
+ */
+function send() {
+	// e.preventDefault();
+	console.log("Message");
+}
+
+document.getElementById("form").addEventListener("submit", send);
