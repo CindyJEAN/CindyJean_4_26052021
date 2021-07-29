@@ -72,7 +72,6 @@ const contestQuantity = document.getElementById("quantity");
  */
 const radio = document.querySelector("input[type=radio]:checked");
 
-
 // ------ launch modal event ------ //
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -81,38 +80,34 @@ closeBtn.addEventListener("click", closeModal);
 
 // ------ launch modal form function ------ //
 /**
- * Au lancement de la modale, on fait apparaître la modale et disparaître la 
+ * Au lancement de la modale, on fait apparaître la modale et disparaître la
  * section hero et le footer, pour ne pas que l'on voit le fond si on swipe vers le bas
  *
  * @return  {Boolean}
  */
 function launchModal() {
 	modalbg.style.display = "block";
-	// heroSection.style.display = "none";
-	// footer.style.display = "none";
-	scroll(0,0);
+	scroll(0, 0);
 	document.querySelector("form").focus();
 	return true;
 }
 
 // ------ close modal form function ------ //
 /**
- * A la fermeture de la modale, on fait disparaître la modale et apparaître la 
+ * A la fermeture de la modale, on fait disparaître la modale et apparaître la
  * section hero et le footers
  *
  * @return  {Boolean}
  */
 function closeModal() {
 	modalbg.style.display = "none";
-	// heroSection.style.display = "block";
-	// footer.style.display = "flex";
 	return true;
 }
 
 // ------ Input validation ------ //
 
 /**
- * showError ajoute aux éléments de formulaire qui ne sont pas valides les 
+ * showError ajoute aux éléments de formulaire qui ne sont pas valides les
  * attributs qui permettent à l'utilisateur de voir l'erreur
  *
  * @param   {HTMLElement}  element    l'input en question
@@ -126,7 +121,7 @@ function showError(element, errorText) {
 }
 
 /**
- * removeError suprrime aux éléments de formulaire qui sont valides les 
+ * removeError suprrime aux éléments de formulaire qui sont valides les
  * attributs qui permettent à l'utilisateur de voir l'erreur
  *
  * @param   {HTMLElement}  element    l'input en question
@@ -138,30 +133,28 @@ function removeError(element) {
 	element.parentElement.removeAttribute("data-error");
 }
 
-
-
-/**
- * [addEventListener description]
- *
- * @param   {String}  input     [input description]
- * @param   {Function}  function  [function description]
- * @param   {Event}  e         [e description]
- *
- * @return  {void}            [return description]
- */
+// /**
+//  * [addEventListener description]
+//  *
+//  * @param   {String}  input     [input description]
+//  * @param   {Function}  function  [function description]
+//  * @param   {Event}  e         [e description]
+//  *
+//  * @return  {void}            [return description]
+//  */
 // firstName.addEventListener("input", function(e) {
 // 	if (e.target.value.length < 2) {
 // 		showError(firstName, "Veuillez entrer au moins deux caractères.");
 // 	}
 // });
 
-
 /**
  * Teste la valeur de l'input Prénom pour le valider ou non
  *
- * @param   {any}  e  [e description]
+ * @event
+ * @param   {Event & { target: HTMLInputElement }}           e        an event
  *
- * @return  {any}     [return description]
+ * @return  {void}     [return description]
  */
 function testFirstNameValue(e) {
 	if (e.target.value.length < 2) {
@@ -170,13 +163,14 @@ function testFirstNameValue(e) {
 		removeError(e.target);
 	}
 }
-firstName.addEventListener("input", testFirstNameValue);
+// firstName.addEventListener("input", testFirstNameValue);
 /**
  * Teste la valeur de l'input Nom pour le valider ou non
  *
- * @param   {any}  e  [e description]
+ * @event
+ * @param   {Event & { target: HTMLInputElement }}  e  [e description]
  *
- * @return  {any}     [return description]
+ * @return  {void}     [return description]
  */
 function testLastNameValue(e) {
 	if (e.target.value.length < 1) {
@@ -185,14 +179,15 @@ function testLastNameValue(e) {
 		removeError(e.target);
 	}
 }
-lastName.addEventListener("input", testLastNameValue);
+// lastName.addEventListener("input", testLastNameValue);
 
 /**
  * Teste la valeur de l'input E-mail pour le valider ou non
  *
- * @param   {any}  e  [e description]
+ * @event
+ * @param   {Event & { target: HTMLInputElement }}  e  [e description]
  *
- * @return  {any}     [return description]
+ * @return  {void}     [return description]
  */
 function testEmailValue(e) {
 	if (e.target.validity.typeMismatch) {
@@ -206,9 +201,10 @@ email.addEventListener("input", testEmailValue);
 /**
  * Teste la valeur de l'input date pour le valider ou non
  *
- * @param   {any}  e  [e description]
+ * @event
+ * @param   {Event & { target: HTMLInputElement }}  e  [e description]
  *
- * @return  {any}     [return description]
+ * @return  {void}     [return description]
  */
 function testDateValue(e) {
 	if (e.target.value.length != 10) {
@@ -222,9 +218,10 @@ date.addEventListener("focusout", testDateValue);
 /**
  * Teste la valeur de l'input quantity pour le valider ou non
  *
- * @param   {any}  e  [e description]
+ * @event
+ * @param   {Event & { target: HTMLInputElement }}  e  [e description]
  *
- * @return  {any}     [return description]
+ * @return  {void}     [return description]
  */
 function testQuantityValue(e) {
 	if (e.target.value.length < 1) {
@@ -235,29 +232,29 @@ function testQuantityValue(e) {
 }
 contestQuantity.addEventListener("focusout", testQuantityValue);
 
-/**
- * Teste si une option est cochée
- *
- *
- * @return  {void}     [return description]
- */
-function testRadioValidity() {
-	// if (!radio.willValidate) {
-	// 	showError(radio, "Veuillez sélectionner une ville.");
-	// } else {
-	// 	removeError(radio);
-	// }
-	// console.log(radio);
-	if (radio == null) {
-		radio.setAttribute("data-error-visible", "true");
-		radio.setAttribute("data-error", "Veuillez sélectionner une ville.");
-	}
-	console.log(radio == null);
-}
-
-
 // /**
-//  * Teste la valeur de l'input pour le valider ou non
+//  * Teste si une option est cochée
+//  *
+//  *
+//  * @return  {void}     [return description]
+//  */
+// function testRadioValidity() {
+// 	// if (!radio.willValidate) {
+// 	// 	showError(radio, "Veuillez sélectionner une ville.");
+// 	// } else {
+// 	// 	removeError(radio);
+// 	// }
+// 	// console.log(radio);
+// 	if (radio == null) {
+// 		radio.setAttribute("data-error-visible", "true");
+// 		radio.setAttribute("data-error", "Veuillez sélectionner une ville.");
+// 	}
+// 	console.log(radio == null);
+// }
+
+//---- premier essai à supprimer -----//
+// /**
+//  * Teste la valeur de l'input en général pour le valider ou non
 //  *
 //  * @param   {any}  e  [e description]
 //  *
@@ -283,33 +280,85 @@ function testRadioValidity() {
 // firstName.addEventListener("input", function(e) {
 // 	testValue("input", e.target.value.length < 2);
 // } );
-
+//fin de partie à supprimer
 
 // ------ Sending form ------ //
-function isFormValid() {
-	let validInputs = 0;
-	for (let input of document.getElementsByTagName("input")) {
-		console.log("validity", input.validity);
-		if (input.validity.valid) return validInputs++;
-	}
-	console.log(validInputs);
-	if (validInputs == document.getElementsByTagName("input").length) return true;
-}
-
+// function isFormValid() {
+// 	let validInputs = 0;
+// 	for (let input of document.getElementsByTagName("input")) {
+// 		console.log("validity", input.validity);
+// 		if (input.validity.valid) return validInputs++;
+// 	}
+// 	console.log(validInputs);
+// 	if (validInputs == document.getElementsByTagName("input").length) return true;
+// }
 
 /**
 //  * Function to send form data
 //  *
 //  * @return  {void}     [return description]
 //  */
-function validate() {
-	// e.preventDefault();
-	console.log("Message");
-	testRadioValidity;	
-	if (isFormValid) {
-		console.log("form valid") //Faire afficher un message de validation
-	}
-	console.log(isFormValid);
-}
+// function validate() {
+// 	// e.preventDefault();
+// 	console.log("Message");
+// 	testRadioValidity;
+// 	if (isFormValid) {
+// 		console.log("form valid") //Faire afficher un message de validation
+// 	}
+// 	console.log(isFormValid);
+// }
 
 // document.getElementById("form").addEventListener("submit", send);
+
+const inputList = document.getElementsByTagName("input");
+
+for (let i = 0; i < inputList.length; i++) {
+	const element = inputList[i];
+	switch (element.type) {
+		case "text":
+			element.addEventListener("input", () =>
+				checkInput(element, [checkLength, isValid])
+			);
+			break;
+		case "email":
+	}
+}
+
+/**
+ * [checkInput description]
+ *
+ * @param   {HTMLInputElement}  input          [input description]
+ * @param   {Array.<Function>}  functionsList  [functionsList description]
+ *
+ * @return  {void}                 [return description]
+ */
+function checkInput(input, functionsList) {
+	const errors = [];
+	for (let i = 0; i < functionsList.length; i++) {
+		const element = functionsList[i](input);
+		if (element !== "") errors.push(element);
+	}
+	if (errors.length === 0) {
+		// enlever les message d'erreur
+		input.parentElement.removeAttribute("data-error-visible");
+		input.parentElement.removeAttribute("data-error");
+		return;
+	} else {
+		//ajouter les message d'erreur
+		input.parentElement.setAttribute("data-error-visible", "true");
+		for (let i = 0; i < errors.length; i++) {
+			input.parentElement.setAttribute("data-error", errors[i]);
+		}
+	}
+
+	console.log("input", input);
+	console.log("errors", errors);
+}
+
+function checkLength(element) {
+	return element.value.length >= 2 ? "" : "Veuillez entrer au moins deux caractères.";
+}
+
+function isValid(element) {
+	return element.checkValidity() ? "" : "Le champs n'est pas valide.";
+}
