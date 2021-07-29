@@ -23,54 +23,11 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 /**
-//  * la section hero
-//  *
-//  * @type   {HTMLElement}  .hero-section
-//  */
-// const heroSection = document.querySelector(".hero-section");
-// /**
-//  * le footer
-//  *
-//  * @type   {HTMLElement}  .footer
-//  */
-// const footer = document.querySelector("footer");
-/**
  * le bouton close
  *
  * @type   {HTMLElement}  .close
  */
 const closeBtn = document.querySelector(".close");
-/**
- * input prénom
- *
- * @param   {HTMLElement}  first  #first
- */
-const firstName = document.getElementById("first");
-/** input nom
- *
- * @param   {HTMLElement}  last  #last
- */
-const lastName = document.getElementById("last");
-/** input email
- *
- * @param   {HTMLElement}  email  #email
- */
-const email = document.getElementById("email");
-/** input date
- *
- * @param   {HTMLElement}  birthdate  #birthdate
- */
-const date = document.getElementById("birthdate");
-/** input quantity
- *
- * @param   {HTMLElement}  quantity  #quantity
- */
-const contestQuantity = document.getElementById("quantity");
-/** input radio location
- *
- * @param   {HTMLElement}  location1  [type=radio]
- */
-const radio = document.querySelector("input[type=radio]:checked");
 
 // ------ launch modal event ------ //
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -134,103 +91,21 @@ function removeError(element) {
 }
 
 // /**
-//  * [addEventListener description]
+//  * Teste la valeur de l'input date pour le valider ou non
 //  *
-//  * @param   {String}  input     [input description]
-//  * @param   {Function}  function  [function description]
-//  * @param   {Event}  e         [e description]
+//  * @event
+//  * @param   {Event & { target: HTMLInputElement }}  e  [e description]
 //  *
-//  * @return  {void}            [return description]
+//  * @return  {void}     [return description]
 //  */
-// firstName.addEventListener("input", function(e) {
-// 	if (e.target.value.length < 2) {
-// 		showError(firstName, "Veuillez entrer au moins deux caractères.");
+// function testDateValue(e) {
+// 	if (e.target.value.length != 10) {
+// 		showError(e.target, "Veuillez entrer une date.");
+// 	} else {
+// 		removeError(e.target);
 // 	}
-// });
-
-/**
- * Teste la valeur de l'input Prénom pour le valider ou non
- *
- * @event
- * @param   {Event & { target: HTMLInputElement }}           e        an event
- *
- * @return  {void}     [return description]
- */
-function testFirstNameValue(e) {
-	if (e.target.value.length < 2) {
-		showError(e.target, "Veuillez entrer au moins deux caractères.");
-	} else {
-		removeError(e.target);
-	}
-}
-// firstName.addEventListener("input", testFirstNameValue);
-/**
- * Teste la valeur de l'input Nom pour le valider ou non
- *
- * @event
- * @param   {Event & { target: HTMLInputElement }}  e  [e description]
- *
- * @return  {void}     [return description]
- */
-function testLastNameValue(e) {
-	if (e.target.value.length < 1) {
-		showError(e.target, "Veuillez entrer au moins un caractère.");
-	} else {
-		removeError(e.target);
-	}
-}
-// lastName.addEventListener("input", testLastNameValue);
-
-/**
- * Teste la valeur de l'input E-mail pour le valider ou non
- *
- * @event
- * @param   {Event & { target: HTMLInputElement }}  e  [e description]
- *
- * @return  {void}     [return description]
- */
-function testEmailValue(e) {
-	if (e.target.validity.typeMismatch) {
-		showError(e.target, "Veuillez entrer une adresse email correcte.");
-	} else {
-		removeError(e.target);
-	}
-}
-email.addEventListener("input", testEmailValue);
-
-/**
- * Teste la valeur de l'input date pour le valider ou non
- *
- * @event
- * @param   {Event & { target: HTMLInputElement }}  e  [e description]
- *
- * @return  {void}     [return description]
- */
-function testDateValue(e) {
-	if (e.target.value.length != 10) {
-		showError(e.target, "Veuillez entrer une date.");
-	} else {
-		removeError(e.target);
-	}
-}
-date.addEventListener("focusout", testDateValue);
-
-/**
- * Teste la valeur de l'input quantity pour le valider ou non
- *
- * @event
- * @param   {Event & { target: HTMLInputElement }}  e  [e description]
- *
- * @return  {void}     [return description]
- */
-function testQuantityValue(e) {
-	if (e.target.value.length < 1) {
-		showError(e.target, "Veuillez entrer un nombre à partir de 0.");
-	} else {
-		removeError(e.target);
-	}
-}
-contestQuantity.addEventListener("focusout", testQuantityValue);
+// }
+// date.addEventListener("focusout", testDateValue);
 
 // /**
 //  * Teste si une option est cochée
@@ -252,35 +127,129 @@ contestQuantity.addEventListener("focusout", testQuantityValue);
 // 	console.log(radio == null);
 // }
 
-//---- premier essai à supprimer -----//
-// /**
-//  * Teste la valeur de l'input en général pour le valider ou non
-//  *
-//  * @param   {any}  e  [e description]
-//  *
-//  * @return  {any}     [return description]
-//  */
-// function testValue(e, test) {
-// 	if (test) {
-// 		showError(e.target, "Veuillez entrer au moins deux caractères.");
-// 	} else {
-// 		removeError(e.target);
+const inputList = document.getElementsByTagName("input");
+
+for (let i = 0; i < inputList.length; i++) {
+	const element = inputList[i];
+	switch (element.type) {
+		case "text":
+			element.addEventListener("input", () =>
+				checkInput(element, [isValid, checkLength])
+			);
+			break;
+		case "email":
+			element.addEventListener("change", () =>
+				checkInput(element, [isValid, checkEmailRegex])
+			);
+			break;
+		case "date":
+			element.max = setDateLimit(18);
+			element.min = setDateLimit(100);
+			element.addEventListener("focusout", () =>
+				checkInput(element, [isValid])
+			);
+			break;
+		case "number":
+			element.addEventListener("change", () =>
+				checkInput(element, [isValid, checkNumberRegex])
+			);
+			break;
+	}
+}
+
+/**
+ * La fonction checkInput vérifie s'il y a des erreurs ou non
+ * sur les input et ajoute ou supprime les attributs qui permettent
+ * d'afficher les messages d'erreur en fonction.
+ *
+ * @param   {HTMLInputElement}  input          l'input en question
+ * @param   {Array.<Function>}  functionsList  le tableau des fonctions qui testent
+ * 																						 la validité de l'input
+ *
+ * @return  {void}                 [return description]
+ */
+function checkInput(input, functionsList) {
+	const errors = [];
+	for (let i = 0; i < functionsList.length; i++) {
+		const element = functionsList[i](input);
+		if (element !== "") errors.push(element);
+	}
+	if (errors.length === 0) {
+		input.parentElement.removeAttribute("data-error-visible");
+		input.parentElement.removeAttribute("data-error");
+		return;
+	}
+	input.parentElement.setAttribute("data-error-visible", "true");
+	let errorString = errors.join(" ");
+	input.parentElement.setAttribute("data-error", errorString);
+	console.log("errors", errors);
+	console.log("errorstring", errorString);
+}
+
+function isValid(element) {
+	return element.checkValidity() ? "" : "Le champs n'est pas valide.";
+}
+
+function checkLength(element) {
+	return element.value.length >= 2
+		? ""
+		: "Veuillez entrer au moins deux caractères.";
+}
+
+function checkEmailRegex(element) {
+	let regex = /\S+@\S+\.\S+/;
+	return regex.test(element.value)
+		? ""
+		: "Veuillez entrer une adresse mail valide.";
+}
+
+function checkNumberRegex(element) {
+	let regex = /[0-9]+/;
+	return regex.test(element.value)
+		? ""
+		: "Veuillez entrer un nombre à partir de 0.";
+}
+
+/**
+ * La fonction setDateLimit calcule la date à un certain nombre d'années de la date du jour
+ *
+ * @param   {Number}  gap  le nombre d'années de différence avec la date du jour
+ *
+ * @return  {String}       retourne la date limite formatée
+ */
+ function setDateLimit(gap) {
+	const limit = new Date(Date.now());
+	limit.setFullYear(limit.getFullYear() - gap);
+	const date = new Intl.DateTimeFormat().format(limit).split("/");
+	return `${date[2]}-${date[1]}-${date[0]}`;
+}
+
+/**
+ * La fonction checkRadio vérifie si un bouton radio est sélectionné ou non.
+ * Elle retourne un message d'erreur si ce n'est pas le cas.
+ *
+ * @return  {String}  retourne un message d'erreur ou une chaîne vide.
+ */
+function checkRadio() {
+	const radio = document.querySelectorAll("input[type=radio]:checked");
+	return radio.length === 0 ? "vous devez choisir une ville" : "";
+}
+//---//
+
+// ------ Keeping form data ------ //
+// function storeData() {
+// 	for (let i = 0; i < inputList.length; i++) {
+// 		const element = inputList[i];
+// 		localStorage.setItem("${element.value}", element.value);
+// 		console.log("value : ", element.value);
+// 		console.log("name : ", localStorage.getItem("${element.value}"));
 // 	}
 // }
 
-// /**
-//  * [addEventListener description]
-//  *
-//  * @param   {Event}  input          [input description]
-//  * @param   {Function}  testValue      [testValue description]
-//  * @param   {Event}  e              [e description]
-//  *
-//  * @return  {[type]}                 [return description]
-//  */
-// firstName.addEventListener("input", function(e) {
-// 	testValue("input", e.target.value.length < 2);
-// } );
-//fin de partie à supprimer
+// window.onbeforeunload = function() {
+// 	storeData();
+// };
+//---//
 
 // ------ Sending form ------ //
 // function isFormValid() {
@@ -301,7 +270,7 @@ contestQuantity.addEventListener("focusout", testQuantityValue);
 // function validate() {
 // 	// e.preventDefault();
 // 	console.log("Message");
-// 	testRadioValidity;
+// 	checkRadio();
 // 	if (isFormValid) {
 // 		console.log("form valid") //Faire afficher un message de validation
 // 	}
@@ -310,55 +279,3 @@ contestQuantity.addEventListener("focusout", testQuantityValue);
 
 // document.getElementById("form").addEventListener("submit", send);
 
-const inputList = document.getElementsByTagName("input");
-
-for (let i = 0; i < inputList.length; i++) {
-	const element = inputList[i];
-	switch (element.type) {
-		case "text":
-			element.addEventListener("input", () =>
-				checkInput(element, [checkLength, isValid])
-			);
-			break;
-		case "email":
-	}
-}
-
-/**
- * [checkInput description]
- *
- * @param   {HTMLInputElement}  input          [input description]
- * @param   {Array.<Function>}  functionsList  [functionsList description]
- *
- * @return  {void}                 [return description]
- */
-function checkInput(input, functionsList) {
-	const errors = [];
-	for (let i = 0; i < functionsList.length; i++) {
-		const element = functionsList[i](input);
-		if (element !== "") errors.push(element);
-	}
-	if (errors.length === 0) {
-		// enlever les message d'erreur
-		input.parentElement.removeAttribute("data-error-visible");
-		input.parentElement.removeAttribute("data-error");
-		return;
-	} else {
-		//ajouter les message d'erreur
-		input.parentElement.setAttribute("data-error-visible", "true");
-		for (let i = 0; i < errors.length; i++) {
-			input.parentElement.setAttribute("data-error", errors[i]);
-		}
-	}
-
-	console.log("input", input);
-	console.log("errors", errors);
-}
-
-function checkLength(element) {
-	return element.value.length >= 2 ? "" : "Veuillez entrer au moins deux caractères.";
-}
-
-function isValid(element) {
-	return element.checkValidity() ? "" : "Le champs n'est pas valide.";
-}
