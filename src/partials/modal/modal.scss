@@ -1,6 +1,11 @@
 /* Modal form */
 $menuHeight: 60px;
 
+form {
+	display: flex;
+	flex-direction: column;
+}
+
 .bground {
 	display: none;
 	position: fixed;
@@ -69,19 +74,6 @@ input {
 		font-size: 20px;
 		height: 48px;
 	}
-
-	// &:invalid {
-	// 	border: solid $color-primary;
-	// }
-
-	// &[type="radio"]:invalid .checkbox-icon {
-	// 	border: solid $color-primary;
-	// 	background-color: $color-primary;
-
-	//   &:after {
-	//     background-color: $color-primary;
-	//   }
-	// }
 }
 
 .formData[data-error]::after {
