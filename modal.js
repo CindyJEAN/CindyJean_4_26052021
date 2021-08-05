@@ -1,7 +1,8 @@
 /**
- * [editNav description]
+ * Fait apparaître ou nom les liens du menu en cliquant sur le menu burger,
+ * en ajoutant ou supprimant la classe "responsive".
  *
- * @return  {void}  [return description]
+ * @return  {void}
  */
 // eslint-disable-next-line no-unused-vars
 function editNav() {
@@ -21,7 +22,7 @@ function editNav() {
  */
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
+// const formData = document.querySelectorAll(".formData");
 /**
  * le bouton close
  *
@@ -29,6 +30,7 @@ const formData = document.querySelectorAll(".formData");
  */
 const closeBtn = document.querySelector(".close");
 
+//------ Modal management ------ //
 // ------ launch modal event ------ //
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -62,75 +64,19 @@ function closeModal() {
 }
 
 // ------ Input validation ------ //
-
-/**
- * showError ajoute aux éléments de formulaire qui ne sont pas valides les
- * attributs qui permettent à l'utilisateur de voir l'erreur
- *
- * @param   {HTMLElement}  element    l'input en question
- * @param   {String}  errorText  le texte d'erreur qui sera affiché
- *
- * @return  {void}             [return description]
- */
-function showError(element, errorText) {
-	element.parentElement.setAttribute("data-error-visible", "true");
-	element.parentElement.setAttribute("data-error", errorText);
-}
-
-/**
- * removeError suprrime aux éléments de formulaire qui sont valides les
- * attributs qui permettent à l'utilisateur de voir l'erreur
- *
- * @param   {HTMLElement}  element    l'input en question
- *
- * @return  {void}             [return description]
- */
-function removeError(element) {
-	element.parentElement.removeAttribute("data-error-visible");
-	element.parentElement.removeAttribute("data-error");
-}
-
-// /**
-//  * Teste la valeur de l'input date pour le valider ou non
-//  *
-//  * @event
-//  * @param   {Event & { target: HTMLInputElement }}  e  [e description]
-//  *
-//  * @return  {void}     [return description]
-//  */
-// function testDateValue(e) {
-// 	if (e.target.value.length != 10) {
-// 		showError(e.target, "Veuillez entrer une date.");
-// 	} else {
-// 		removeError(e.target);
-// 	}
-// }
-// date.addEventListener("focusout", testDateValue);
-
-// /**
-//  * Teste si une option est cochée
-//  *
-//  *
-//  * @return  {void}     [return description]
-//  */
-// function testRadioValidity() {
-// 	// if (!radio.willValidate) {
-// 	// 	showError(radio, "Veuillez sélectionner une ville.");
-// 	// } else {
-// 	// 	removeError(radio);
-// 	// }
-// 	// console.log(radio);
-// 	if (radio == null) {
-// 		radio.setAttribute("data-error-visible", "true");
-// 		radio.setAttribute("data-error", "Veuillez sélectionner une ville.");
-// 	}
-// 	console.log(radio == null);
-// }
-
 const inputList = document.getElementsByTagName("input");
 
+const fieldInputList = [];
 for (let i = 0; i < inputList.length; i++) {
-	const element = inputList[i];
+	const input = inputList[i];
+	if (input.type !== "submit" && input.type !== "radio") {
+		fieldInputList.push(input);
+	}
+}
+
+/* Adds eventListener to each input depending on its type and checks its validity */
+for (let i = 0; i < fieldInputList.length; i++) {
+	const element = fieldInputList[i];
 	switch (element.type) {
 		case "text":
 			element.addEventListener("input", () =>
@@ -138,7 +84,7 @@ for (let i = 0; i < inputList.length; i++) {
 			);
 			break;
 		case "email":
-			element.addEventListener("change", () =>
+			element.addEventListener("focusout", () =>
 				checkInput(element, [isValid, checkEmailRegex])
 			);
 			break;
@@ -150,7 +96,7 @@ for (let i = 0; i < inputList.length; i++) {
 			);
 			break;
 		case "number":
-			element.addEventListener("change", () =>
+			element.addEventListener("focusout", () =>
 				checkInput(element, [isValid, checkNumberRegex])
 			);
 			break;
@@ -166,7 +112,7 @@ for (let i = 0; i < inputList.length; i++) {
  * @param   {Array.<Function>}  functionsList  le tableau des fonctions qui testent
  * 																						 la validité de l'input
  *
- * @return  {void}                 [return description]
+ * @return  {void}
  */
 function checkInput(input, functionsList) {
 	const errors = [];
@@ -177,11 +123,13 @@ function checkInput(input, functionsList) {
 	if (errors.length === 0) {
 		input.parentElement.removeAttribute("data-error-visible");
 		input.parentElement.removeAttribute("data-error");
+		storeData(input);
 		return;
 	}
 	input.parentElement.setAttribute("data-error-visible", "true");
 	let errorString = errors.join(" ");
 	input.parentElement.setAttribute("data-error", errorString);
+	removeData(input);
 	console.log("errors", errors);
 	console.log("errorstring", errorString);
 }
@@ -204,7 +152,7 @@ function checkEmailRegex(element) {
 }
 
 function checkNumberRegex(element) {
-	let regex = /[0-9]+/;
+	let regex = /^\d+/;
 	return regex.test(element.value)
 		? ""
 		: "Veuillez entrer un nombre à partir de 0.";
@@ -217,7 +165,7 @@ function checkNumberRegex(element) {
  *
  * @return  {String}       retourne la date limite formatée
  */
- function setDateLimit(gap) {
+function setDateLimit(gap) {
 	const limit = new Date(Date.now());
 	limit.setFullYear(limit.getFullYear() - gap);
 	const date = new Intl.DateTimeFormat().format(limit).split("/");
@@ -234,22 +182,51 @@ function checkRadio() {
 	const radio = document.querySelectorAll("input[type=radio]:checked");
 	return radio.length === 0 ? "vous devez choisir une ville" : "";
 }
-//---//
 
-// ------ Keeping form data ------ //
+// ------ Saving form data ------ //
+// /**
+//  * function storeData stores each input element's value, using its name as key
+//  *
+//  * @return  {void}
+//  */
 // function storeData() {
 // 	for (let i = 0; i < inputList.length; i++) {
 // 		const element = inputList[i];
-// 		localStorage.setItem("${element.value}", element.value);
-// 		console.log("value : ", element.value);
-// 		console.log("name : ", localStorage.getItem("${element.value}"));
+// 		localStorage.setItem(`${element.name}`, element.value);
 // 	}
 // }
+/**
+ * function storeData stores each input element's value, using its name as key
+ *
+ * @return  {void}
+ */
+function storeData(input) {
+	localStorage.setItem(`${input.name}`, input.value);
+}
+/**
+ * function storeData stores each input element's value, using its name as key
+ *
+ * @return  {void}
+ */
+function removeData(input) {
+	localStorage.removeItem(`${input.name}`);
+}
 
-// window.onbeforeunload = function() {
-// 	storeData();
-// };
-//---//
+/**
+ * function getStoredData gets each input element's stored value and assigns
+ * it to its current value
+ *
+ * @return  {void}
+ */
+function getStoredData() {
+	for (let i = 0; i < fieldInputList.length; i++) {
+		const element = fieldInputList[i];
+		element.value = localStorage.getItem(`${element.name}`);
+	}
+}
+
+window.onload = () => getStoredData();
+// window.onbeforeunload = () => storeData();
 
 // ------ Sending form ------ //
 // function isFormValid() {
@@ -262,20 +239,39 @@ function checkRadio() {
 // 	if (validInputs == document.getElementsByTagName("input").length) return true;
 // }
 
+let inputWithError = 0;
+function isFormValid() {
+	for (let i = 0; i < inputList.length; i++) {
+		const input = inputList[i];
+		const errorAttribute =
+			input.parentElement.getAttribute("data-error-visible");
+		if (errorAttribute === null || "") {
+			console.log("no errorAttribute", errorAttribute);
+			// return;
+		} else {
+			inputWithError++;
+			console.log("inputWithError", inputWithError);
+		}
+	}
+}
+
 /**
-//  * Function to send form data
-//  *
-//  * @return  {void}     [return description]
-//  */
-// function validate() {
-// 	// e.preventDefault();
-// 	console.log("Message");
-// 	checkRadio();
-// 	if (isFormValid) {
-// 		console.log("form valid") //Faire afficher un message de validation
-// 	}
-// 	console.log(isFormValid);
-// }
+ * Function to send form data
+ *
+ * @return  {void}     [return description]
+ */
+function validate() {
+	checkRadio();
+	isFormValid();
+	// if (isFormValid) {
+	// 	console.log("form valid") //Faire afficher un message de validation
+	// }
+	// console.log(isFormValid);
+}
 
-// document.getElementById("form").addEventListener("submit", send);
+function submitForm(e) {
+	e.preventDefault();
+}
 
+//Pour empêcher le reload de la page et le submit lorsqu'on clique sur le bouton
+document.getElementById("form").addEventListener("submit", submitForm);
