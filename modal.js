@@ -1,6 +1,6 @@
 /**
- * Fait apparaître ou nom les liens du menu en cliquant sur le menu burger,
- * en ajoutant ou supprimant la classe "responsive".
+ * Clicking the burger menu launches the editNav function, which shows the links or not
+ * by adding or removing the class "reponsive".
  *
  * @return  {void}
  */
@@ -16,7 +16,7 @@ function editNav() {
 
 //------ DOM Elements ------ //
 /**
- * le fond de la modale
+ * modal background
  *
  * @type   {HTMLElement}  .bground
  */
@@ -29,6 +29,7 @@ const modalBtn = document.querySelectorAll(".modal-btn");
  * @type   {HTMLElement}  .close
  */
 const closeBtn = document.querySelector(".close");
+//validators will contain the error messages from the functions checking the validity
 const validators = {};
 
 //------ Modal management ------ //
@@ -40,8 +41,7 @@ closeBtn.addEventListener("click", closeModal);
 
 // ------ launch modal form function ------ //
 /**
- * Au lancement de la modale, on fait apparaître la modale et disparaître la
- * section hero et le footer, pour ne pas que l'on voit le fond si on swipe vers le bas
+ * The launchModal function shows the modal by modifying the display style as block
  *
  * @return  {Boolean}
  */
@@ -54,8 +54,7 @@ function launchModal() {
 
 // ------ close modal form function ------ //
 /**
- * A la fermeture de la modale, on fait disparaître la modale et apparaître la
- * section hero et le footers
+ * The closeModal function hides the modal by modifying the display style as none
  *
  * @return  {Boolean}
  */
@@ -67,45 +66,36 @@ function closeModal() {
 // ------ Input validation ------ //
 const inputList = document.getElementsByTagName("input");
 
-/* Adds eventListener to each input depending on its type and checks its validity */
+/* Adds an eventListener to each input depending on its type and checks its validity */
 for (let i = 0; i < inputList.length; i++) {
 	const element = inputList[i];
 	switch (element.type) {
 		case "text":
-			validators[element.id] =[isValid, checkLength];
-			element.addEventListener("input", () =>
-				checkInput(element)
-			);
+			validators[element.id] = [isValid, checkLength];
+			element.addEventListener("input", () => checkInput(element));
 			break;
 		case "email":
 			validators[element.id] = [isValid, checkEmailRegex];
-			element.addEventListener("focusout", () =>
-				checkInput(element)
-			);
+			element.addEventListener("focusout", () => checkInput(element));
 			break;
 		case "date":
-			validators[element.id] = [checkDate,isValid] ;
+			validators[element.id] = [isDateValid, hasDate];
 			element.max = setDateLimit(18);
 			element.min = setDateLimit(100);
-			element.addEventListener("focusout", () =>
-				checkInput(element)
-			);
+			element.addEventListener("focusout", () => checkInput(element));
 			break;
 		case "number":
-			validators[element.id] =  [isValid, checkNumberRegex];
-			element.addEventListener("focusout", () =>
-				checkInput(element)
-			);
+			validators[element.id] = [isValid, checkNumberRegex];
+			element.addEventListener("focusout", () => checkInput(element));
 			break;
 	}
 }
 
 /**
- * La fonction checkInput vérifie s'il y a des erreurs ou non
- * sur les input et ajoute ou supprime les attributs qui permettent
- * d'afficher les messages d'erreur en fonction.
+ * checkInput checks if there are errors for the input, by checking 
+ * the errors stocked in the validtors object, and uses the showError function.
  *
- * @param   {HTMLInputElement}  input          l'input en question
+ * @param   {HTMLInputElement}  input          the input checked
  *
  * @return  {void}
  */
@@ -119,7 +109,15 @@ function checkInput(input) {
 	showError(input, errors);
 }
 
-function showError(input, errors){
+/**
+ *
+ *
+ * @param   {HTMLInputElement}  input   the input checked
+ * @param   {Array}  errors  array of error messages
+ *
+ * @return  {void}
+ */
+function showError(input, errors) {
 	if (errors.length === 0) {
 		input.parentElement.removeAttribute("data-error-visible");
 		input.parentElement.removeAttribute("data-error");
@@ -133,10 +131,16 @@ function showError(input, errors){
 }
 
 function isValid(element) {
-	return element.checkValidity() ? "" : "Le champs n'est pas valide.";
+	return element.checkValidity() ? "" : "Le champ n'est pas valide.";
 }
-function checkDate(element) {
-	return element.value === "" ? "Une date doit $etre saisie." : "" ;
+function isDateValid(element) {
+	return element.checkValidity()
+		? ""
+		: "Vous devez avoir plus de 18 ans pour vous inscrire.";
+}
+
+function hasDate(element) {
+	return element.value === "" ? "Une date doit être saisie." : "";
 }
 
 function checkLength(element) {
@@ -160,11 +164,11 @@ function checkNumberRegex(element) {
 }
 
 /**
- * La fonction setDateLimit calcule la date à un certain nombre d'années de la date du jour
+ * setDateLimit takes a number of years from todays'date, and returns the corresponding date
  *
- * @param   {Number}  gap  le nombre d'années de différence avec la date du jour
+ * @param   {Number}  gap  a number of years
  *
- * @return  {String}       retourne la date limite formatée
+ * @return  {String}       returns a formated date
  */
 function setDateLimit(gap) {
 	const limit = new Date(Date.now());
@@ -174,10 +178,9 @@ function setDateLimit(gap) {
 }
 
 /**
- * La fonction checkRadio vérifie si un bouton radio est sélectionné ou non.
- * Elle retourne un message d'erreur si ce n'est pas le cas.
+ * checkRadio checks if a radio input is selected. If there isn't, the function returns an error message.
  *
- * @return  {String}  retourne un message d'erreur ou une chaîne vide.
+ * @return  {String}  returns an error message or an empty string
  */
 function checkRadio() {
 	const radio = document.querySelectorAll("input[type=radio]:checked");
@@ -211,10 +214,9 @@ function checkRadio() {
 // 	if (validInputs == document.getElementsByTagName("input").length) return true;
 // }
 
-
 /**
  * Function to send form data
- * 
+ *
  * @param {Event}  e
  *
  * @return  {void}     [return description]
@@ -222,7 +224,7 @@ function checkRadio() {
 function validate(e) {
 	e.preventDefault();
 	e.stopPropagation();
-	for( const[key, value] of Object.entries(validators)){
+	for (const [key, value] of Object.entries(validators)) {
 		// @ts-ignore
 		checkInput(document.getElementById(key));
 	}
