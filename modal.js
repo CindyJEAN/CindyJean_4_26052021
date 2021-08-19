@@ -35,7 +35,6 @@ const form = document.querySelector("#form");
  * @type   {HTMLElement}  .submit-message  
  */
 const submitMessage = document.querySelector(".submit-message");
-const closeBtn = document.querySelectorAll(".close");
 //validators will contain the error messages from the functions checking the validity
 const validators = {};
 
@@ -44,7 +43,7 @@ const validators = {};
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // ------ close modal event ------ //
-closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
+document.querySelector(".close").addEventListener("click", closeModal);
 
 // ------ launch modal form function ------ //
 /**
@@ -97,8 +96,11 @@ for (let i = 0; i < inputList.length; i++) {
 			validators[element.id] = [checkCheckbox];
 			element.addEventListener("click", () => checkInput(element));
 			break;
-		default:
-			break;
+		case "radio" : 
+			element.addEventListener("click", () =>
+				showError(element, [])
+			);
+		break
 	}
 }
 
@@ -138,7 +140,7 @@ function showError(input, errors) {
 	input.parentElement.setAttribute("data-error-visible", "true");
 	let errorString = errors.join(" ");
 	input.parentElement.setAttribute("data-error", errorString);
-	// console.log("errors", errors);
+	console.log("errors", errors);
 	// console.log("errorstring", errorString);
 }
 
@@ -199,8 +201,14 @@ function checkRadio() {
 	if (radio.length === 0) {
 		return "Vous devez choisir une ville.";
 	}
+	return "";
 }
 
+/**
+ * checkCheckbox checks if the checkbox for the terms of use is checked
+ *
+ * @return  {String}  returns an error message or an empty string
+ */
 function checkCheckbox() {
 	// @ts-ignore
 	return !document.getElementById("checkbox1").checked
@@ -208,29 +216,6 @@ function checkCheckbox() {
 		: "";
 }
 
-// ------ Sending form ------ //
-// function isFormValid() {
-// 	let validInputs = 0;
-// 	for (let input of document.getElementsByTagName("input")) {
-// 		console.log("validity", input.validity.valid);
-// 		if (input.validity.valid) return validInputs++;
-// 	}
-// 	// console.log(validInputs);
-// 	if (validInputs == document.getElementsByTagName("input").length) return true;
-// }
-
-// function isFormValid() {
-// 	let inError = 0;
-// 	for (let i = 0; i < inputList.length; i++) {
-// 		const element = inputList[i];
-// 		if (element.parentElement.getAttribute("data-error-visible") === "true") {
-// 			inError++;
-// 		}
-// 	}
-// 	console.log("inError", inError);
-// 	// console.log("inputlist", inputList);
-// 	inError === 0 ? console.log("form valid") : console.log("form invalid");
-// }
 
 /**
  * Function to validate the form
@@ -246,25 +231,16 @@ function validate(e) {
 		// @ts-ignore
 		checkInput(document.getElementById(key));
 	}
-	showError(document.querySelector("input[type=radio]"), [checkRadio()]);
-	// console.log("checkradio", [checkRadio()]);
-	// showError(document.querySelector("#checkbox1"), [checkCheckbox()]);
+	const errorRadio = checkRadio();
+	if (errorRadio !=="") showError(document.querySelector("input[type=radio]"), [errorRadio]);
 
-	// isFormValid();
-	// console.log("isformvalid", isFormValid());
-
-	// 	console.log("form valid") //Faire afficher un message de validation
-	// console.log(isFormValid);
-
-	submit();
-
-}
-
-function submit() {
-	form.style.display = "none";
-	submitMessage.style.display = "flex";
+	if (document.querySelectorAll("[data-error-visible]").length > 0) return;
+	document.querySelector(".modal-body").innerHTML = `
+	<div class="submit-message">
+	<h2>Merci pour votre réservation !</h2>
+	<button class="button btn-submit" onclick="closeModal()">Fermer</button>
+</div>`;
 }
 
 
-//Pour empêcher le reload de la page et le submit lorsqu'on clique sur le bouton
 document.getElementById("form").addEventListener("submit", validate);
