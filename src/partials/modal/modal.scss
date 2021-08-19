@@ -6,6 +6,15 @@ form {
 	flex-direction: column;
 }
 
+.submit-message {
+	display: none;
+	flex-direction: column;
+	color: white;
+	text-align: center;
+	justify-content: space-between;
+	height: 400px;
+}
+
 .bground {
 	display: none;
 	position: fixed;
@@ -41,6 +50,11 @@ form {
 		.modal-body {
 			padding: 15px 8%;
 			margin: 15px auto 0;
+			display: flex;
+			justify-content: center;
+			align-items: flex-end;
+			// align-items: center;
+			min-height: 730px;
 		}
 	}
 
@@ -81,8 +95,8 @@ input {
 	font-size: 0.7rem;
 	color: $color-error;
 	display: block;
-	margin-top: 7px;
-	margin-bottom: 7px;
+	// margin-top: 7px;
+	// margin-bottom: 7px;
 	text-align: right;
 	// line-height: 0.3;
 	opacity: 0;
@@ -192,7 +206,7 @@ input[data-error]::after {
 	}
 }
 
-.close {
+.cross {
 	position: absolute;
 	right: 15px;
 	top: 15px;
@@ -226,7 +240,7 @@ input[data-error]::after {
 }
 
 .btn-submit {
-	margin: auto;
+	margin: .5rem auto;
 	font-size: 1rem;
 	padding: 0.75rem 3rem;
 }

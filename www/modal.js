@@ -24,11 +24,18 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 // const formData = document.querySelectorAll(".formData");
 /**
- * le bouton close
+ * form
  *
- * @type   {HTMLElement}  .close
+ * @type   {HTMLElement}  #form  
  */
-const closeBtn = document.querySelector(".close");
+const form = document.querySelector("#form");
+/**
+ * submitMessage
+ *
+ * @type   {HTMLElement}  .submit-message  
+ */
+const submitMessage = document.querySelector(".submit-message");
+const closeBtn = document.querySelectorAll(".close");
 //validators will contain the error messages from the functions checking the validity
 const validators = {};
 
@@ -37,30 +44,28 @@ const validators = {};
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // ------ close modal event ------ //
-closeBtn.addEventListener("click", closeModal);
+closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 
 // ------ launch modal form function ------ //
 /**
  * The launchModal function shows the modal by modifying the display style as block
  *
- * @return  {Boolean}
+ * @return  {Void}
  */
 function launchModal() {
 	modalbg.style.display = "block";
 	scroll(0, 0);
 	document.querySelector("form").focus();
-	return true;
 }
 
 // ------ close modal form function ------ //
 /**
  * The closeModal function hides the modal by modifying the display style as none
  *
- * @return  {Boolean}
+ * @return  {Void}
  */
 function closeModal() {
 	modalbg.style.display = "none";
-	return true;
 }
 
 // ------ Input validation ------ //
@@ -79,7 +84,7 @@ for (let i = 0; i < inputList.length; i++) {
 			element.addEventListener("focusout", () => checkInput(element));
 			break;
 		case "date":
-			validators[element.id] = [isDateValid, hasDate];
+			validators[element.id] = [hasDate, isDateValid];
 			element.max = setDateLimit(18);
 			element.min = setDateLimit(100);
 			element.addEventListener("focusout", () => checkInput(element));
@@ -88,11 +93,17 @@ for (let i = 0; i < inputList.length; i++) {
 			validators[element.id] = [isValid, checkNumberRegex];
 			element.addEventListener("focusout", () => checkInput(element));
 			break;
+		case "checkbox":
+			validators[element.id] = [checkCheckbox];
+			element.addEventListener("click", () => checkInput(element));
+			break;
+		default:
+			break;
 	}
 }
 
 /**
- * checkInput checks if there are errors for the input, by checking 
+ * checkInput checks if there are errors for the input, by checking
  * the errors stocked in the validtors object, and uses the showError function.
  *
  * @param   {HTMLInputElement}  input          the input checked
@@ -107,6 +118,7 @@ function checkInput(input) {
 		if (element !== "") errors.push(element);
 	}
 	showError(input, errors);
+	// console.log(errors);
 }
 
 /**
@@ -126,8 +138,8 @@ function showError(input, errors) {
 	input.parentElement.setAttribute("data-error-visible", "true");
 	let errorString = errors.join(" ");
 	input.parentElement.setAttribute("data-error", errorString);
-	console.log("errors", errors);
-	console.log("errorstring", errorString);
+	// console.log("errors", errors);
+	// console.log("errorstring", errorString);
 }
 
 function isValid(element) {
@@ -184,42 +196,48 @@ function setDateLimit(gap) {
  */
 function checkRadio() {
 	const radio = document.querySelectorAll("input[type=radio]:checked");
-	return radio.length === 0 ? "vous devez choisir une ville" : "";
+	if (radio.length === 0) {
+		return "Vous devez choisir une ville.";
+	}
 }
 
-// ------ Saving form data ------ //
-// function storeData(input) {
-// 	localStorage.setItem(`${input.name}`, input.value);
-// }
-// function removeData(input) {
-// 	localStorage.removeItem(`${input.name}`);
-// }
-// function getStoredData() {
-// 	for (let i = 0; i < inputList.length; i++) {
-// 		const element = inputList[i];
-// 		element.value = localStorage.getItem(`${element.name}`);
-// 	}
-// }
-// window.onload = () => getStoredData();
-// window.onbeforeunload = () => storeData();
+function checkCheckbox() {
+	// @ts-ignore
+	return !document.getElementById("checkbox1").checked
+		? "Vous devez lire et accepter les conditions d'utilisation."
+		: "";
+}
 
 // ------ Sending form ------ //
 // function isFormValid() {
 // 	let validInputs = 0;
 // 	for (let input of document.getElementsByTagName("input")) {
-// 		console.log("validity", input.validity);
+// 		console.log("validity", input.validity.valid);
 // 		if (input.validity.valid) return validInputs++;
 // 	}
-// 	console.log(validInputs);
+// 	// console.log(validInputs);
 // 	if (validInputs == document.getElementsByTagName("input").length) return true;
 // }
 
+// function isFormValid() {
+// 	let inError = 0;
+// 	for (let i = 0; i < inputList.length; i++) {
+// 		const element = inputList[i];
+// 		if (element.parentElement.getAttribute("data-error-visible") === "true") {
+// 			inError++;
+// 		}
+// 	}
+// 	console.log("inError", inError);
+// 	// console.log("inputlist", inputList);
+// 	inError === 0 ? console.log("form valid") : console.log("form invalid");
+// }
+
 /**
- * Function to send form data
+ * Function to validate the form
  *
  * @param {Event}  e
  *
- * @return  {void}     [return description]
+ * @return  {void}
  */
 function validate(e) {
 	e.preventDefault();
@@ -229,12 +247,24 @@ function validate(e) {
 		checkInput(document.getElementById(key));
 	}
 	showError(document.querySelector("input[type=radio]"), [checkRadio()]);
+	// console.log("checkradio", [checkRadio()]);
+	// showError(document.querySelector("#checkbox1"), [checkCheckbox()]);
+
 	// isFormValid();
-	// if (isFormValid) {
+	// console.log("isformvalid", isFormValid());
+
 	// 	console.log("form valid") //Faire afficher un message de validation
-	// }
 	// console.log(isFormValid);
+
+	submit();
+
 }
+
+function submit() {
+	form.style.display = "none";
+	submitMessage.style.display = "flex";
+}
+
 
 //Pour empêcher le reload de la page et le submit lorsqu'on clique sur le bouton
 document.getElementById("form").addEventListener("submit", validate);
