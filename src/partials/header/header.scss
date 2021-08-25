@@ -13,10 +13,8 @@
 .topnav {
 	margin: 1.5rem;
 	max-width: 1300px;
-	// height: 70px;
 	display: flex;
 	justify-content: space-between;
-	// align-items: center;
 	align-content: center;
 
 	@include tablet {
@@ -36,7 +34,6 @@
 		margin: 2px;
 		text-decoration: none;
 		font-size: 18px;
-		// font-family: Roboto, sans-serif;
 		border-radius: 12px;
 
 		@include tablet {
@@ -103,7 +100,6 @@
 .main-navbar {
 	display: flex;
 	flex-direction: row;
-	// align-items: center;
 
 	@include tablet {
 		align-items: center;
