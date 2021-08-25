@@ -26,13 +26,13 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 /**
  * form
  *
- * @type   {HTMLElement}  #form  
+ * @type   {HTMLElement}  #form
  */
 const form = document.querySelector("#form");
 /**
  * submitMessage
  *
- * @type   {HTMLElement}  .submit-message  
+ * @type   {HTMLElement}  .submit-message
  */
 const submitMessage = document.querySelector(".submit-message");
 //validators will contain the error messages from the functions checking the validity
@@ -96,11 +96,9 @@ for (let i = 0; i < inputList.length; i++) {
 			validators[element.id] = [checkCheckbox];
 			element.addEventListener("click", () => checkInput(element));
 			break;
-		case "radio" : 
-			element.addEventListener("click", () =>
-				showError(element, [])
-			);
-		break
+		case "radio":
+			element.addEventListener("click", () => showError(element, []));
+			break;
 	}
 }
 
@@ -216,7 +214,6 @@ function checkCheckbox() {
 		: "";
 }
 
-
 /**
  * Function to validate the form
  *
@@ -232,7 +229,8 @@ function validate(e) {
 		checkInput(document.getElementById(key));
 	}
 	const errorRadio = checkRadio();
-	if (errorRadio !=="") showError(document.querySelector("input[type=radio]"), [errorRadio]);
+	if (errorRadio !== "")
+		showError(document.querySelector("input[type=radio]"), [errorRadio]);
 
 	if (document.querySelectorAll("[data-error-visible]").length > 0) return;
 	document.querySelector(".modal-body").innerHTML = `
@@ -241,6 +239,5 @@ function validate(e) {
 	<button class="button btn-submit" onclick="closeModal()">Fermer</button>
 </div>`;
 }
-
 
 document.getElementById("form").addEventListener("submit", validate);
