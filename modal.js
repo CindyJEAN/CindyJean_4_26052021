@@ -22,7 +22,6 @@ function editNav() {
  */
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-// const formData = document.querySelectorAll(".formData");
 /**
  * form
  *
@@ -35,7 +34,11 @@ const form = document.querySelector("#form");
  * @type   {HTMLElement}  .submit-message
  */
 const submitMessage = document.querySelector(".submit-message");
-//validators will contain the error messages from the functions checking the validity
+/**
+ * validators will contain the functions checking the validity of the inputs
+ *
+ * @type {Object}
+ */
 const validators = {};
 
 //------ Modal management ------ //
@@ -118,11 +121,12 @@ function checkInput(input) {
 		if (element !== "") errors.push(element);
 	}
 	showError(input, errors);
-	// console.log(errors);
 }
 
 /**
- *
+ * showError takes the input checked and the array containing errors or not. 
+ * If there are errors, it adds the attributes that display errors with css 
+ * and concatenates the error messages. If there are no errors, it removes them.
  *
  * @param   {HTMLInputElement}  input   the input checked
  * @param   {Array}  errors  array of error messages
@@ -138,10 +142,9 @@ function showError(input, errors) {
 	input.parentElement.setAttribute("data-error-visible", "true");
 	let errorString = errors.join(" ");
 	input.parentElement.setAttribute("data-error", errorString);
-	console.log("errors", errors);
-	// console.log("errorstring", errorString);
 }
 
+// ---- Functions testing the validity of the inputs ---- //
 function isValid(element) {
 	return element.checkValidity() ? "" : "Le champ n'est pas valide.";
 }
@@ -150,24 +153,20 @@ function isDateValid(element) {
 		? ""
 		: "Vous devez avoir plus de 18 ans pour vous inscrire.";
 }
-
 function hasDate(element) {
 	return element.value === "" ? "Une date doit être saisie." : "";
 }
-
 function checkLength(element) {
 	return element.value.length >= 2
 		? ""
 		: "Veuillez entrer au moins deux caractères.";
 }
-
 function checkEmailRegex(element) {
 	let regex = /\S+@\S+\.\S+/;
 	return regex.test(element.value)
 		? ""
 		: "Veuillez entrer une adresse mail valide.";
 }
-
 function checkNumberRegex(element) {
 	let regex = /^\d+/;
 	return regex.test(element.value)
@@ -214,6 +213,7 @@ function checkCheckbox() {
 		: "";
 }
 
+// ------ Submitting the form ------ //
 /**
  * Function to validate the form
  *
