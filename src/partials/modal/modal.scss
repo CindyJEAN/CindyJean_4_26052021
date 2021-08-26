@@ -1,18 +1,7 @@
 /* Modal form */
-$menuHeight: 60px;
-
 form {
 	display: flex;
 	flex-direction: column;
-}
-
-.submit-message {
-	display: flex;
-	flex-direction: column;
-	color: white;
-	text-align: center;
-	justify-content: space-between;
-	height: 400px;
 }
 
 .bground {
@@ -21,8 +10,8 @@ form {
 	z-index: 1;
 	left: 0;
 
-	top: $menuHeight;
-	height: calc(100vh - #{$menuHeight});
+	top: $headerHeight;
+	height: calc(100vh - #{$headerHeight});
 	width: 100%;
 	overflow: auto;
 
@@ -238,4 +227,13 @@ input {
 	font-weight: normal;
 	font-size: 16px;
 	margin-bottom: 11px;
+}
+
+.submit-message {
+	display: flex;
+	flex-direction: column;
+	color: white;
+	text-align: center;
+	justify-content: space-between;
+	height: 400px;
 }
