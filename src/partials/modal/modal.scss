@@ -9,7 +9,6 @@ form {
 	position: fixed;
 	z-index: 1;
 	left: 0;
-
 	top: $headerHeight;
 	height: calc(100vh - #{$headerHeight});
 	width: 100%;
@@ -162,6 +161,12 @@ input {
 	}
 }
 
+.text-label {
+	font-weight: normal;
+	font-size: 16px;
+	margin-bottom: 11px;
+}
+
 .cross {
 	position: absolute;
 	right: 15px;
@@ -213,6 +218,15 @@ input {
 	}
 }
 
+.submit-message {
+	display: flex;
+	flex-direction: column;
+	color: white;
+	text-align: center;
+	justify-content: space-between;
+	height: 400px;
+}
+
 @keyframes modalopen {
 	from {
 		opacity: 0;
@@ -221,19 +235,4 @@ input {
 	to {
 		opacity: 1;
 	}
-}
-
-.text-label {
-	font-weight: normal;
-	font-size: 16px;
-	margin-bottom: 11px;
-}
-
-.submit-message {
-	display: flex;
-	flex-direction: column;
-	color: white;
-	text-align: center;
-	justify-content: space-between;
-	height: 400px;
 }

@@ -145,28 +145,70 @@ function showError(input, errors) {
 }
 
 // ---- Functions testing the validity of the inputs ---- //
+/**
+ * Checks if the data in the input is valid, from the attributes given to the input in HTML 
+ *
+ * @param   {HTMLInputElement}  element  the input tested
+ *
+ * @return  {String}           returns an error message or an empty string
+ */
 function isValid(element) {
 	return element.checkValidity() ? "" : "Le champ n'est pas valide.";
 }
+/**
+ * Checks if the data in the input is a date and is between the min and max 
+ *
+ * @param   {HTMLInputElement}  element  the input (date) tested
+ *
+ * @return  {String}           returns an error message or an empty string
+ */
 function isDateValid(element) {
 	return element.checkValidity()
 		? ""
 		: "Vous devez avoir plus de 18 ans pour vous inscrire.";
 }
+/**
+ * Checks if there is a date or not 
+ *
+ * @param   {HTMLInputElement}  element  the input (date) tested
+ *
+ * @return  {String}           returns an error message or an empty string
+ */
 function hasDate(element) {
 	return element.value === "" ? "Une date doit être saisie." : "";
 }
+/**
+ * Checks if the text in the input is at least 2 letters long 
+ *
+ * @param   {HTMLInputElement}  element  the input (text) tested
+ *
+ * @return  {String}           returns an error message or an empty string
+ */
 function checkLength(element) {
 	return element.value.length >= 2
 		? ""
 		: "Veuillez entrer au moins deux caractères.";
 }
+/**
+ * Checks if the email corresponds to the type of email we want
+ *
+ * @param   {HTMLInputElement}  element  the input (email) tested
+ *
+ * @return  {String}           returns an error message or an empty string
+ */
 function checkEmailRegex(element) {
 	let regex = /\S+@\S+\.\S+/;
 	return regex.test(element.value)
 		? ""
 		: "Veuillez entrer une adresse mail valide.";
 }
+/**
+ * Checks if the number is a number and higher than 0
+ *
+ * @param   {HTMLInputElement}  element  the input (number) tested
+ *
+ * @return  {String}           returns an error message or an empty string
+ */
 function checkNumberRegex(element) {
 	let regex = /^\d+/;
 	return regex.test(element.value)
